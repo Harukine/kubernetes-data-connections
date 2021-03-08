@@ -1,7 +1,6 @@
 import * as redisStore from 'cache-manager-redis-store';
-import {CacheInterceptor, CacheModule, Module} from '@nestjs/common';
+import {CacheModule, Module} from '@nestjs/common';
 import {RedisController} from './redis.controller';
-import {APP_INTERCEPTOR} from "@nestjs/core";
 
 @Module({
     imports: [
@@ -15,13 +14,7 @@ import {APP_INTERCEPTOR} from "@nestjs/core";
             },
         }),
     ],
-    controllers: [RedisController],
-    providers: [
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: CacheInterceptor
-        }
-    ]
+    controllers: [RedisController]
 })
 export class RedisModule {
 }
