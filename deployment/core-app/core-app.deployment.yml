@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+  name: core-app
+  namespace: k8s-demo
+spec:
+  selector:
+    matchLabels:
+      app: core-app
+  template:
+    metadata:
+      labels:
+        app: core-app
+    spec:
+      containers:
+        - name: core-app
+          image: core-app:demo
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 1
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: secrets
+              mountPath: "/etc/secrets"
+          env:
+            - name: REDIS_HOST
+              value: 'redis-primary'
+            - name: REDIS_PORT
+              value: '6379'
+            # - name: CHAOS
+            #   value: true
+            - name: SECRET1_TEST
+              valueFrom:
+                secretKeyRef:
+                  name: core-app
+                  key: val1test
+            - name: CONFIGMAP_TEST
+              valueFrom:
+                configMapKeyRef:
+                  name: core-app
+                  key: test.config.key1
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 300Mi
+      volumes:
+        - name: secrets
+          secret:
+            secretName: core-app
+            items:
+              - key: val2test
+                path: secret_file
+                mode: 511

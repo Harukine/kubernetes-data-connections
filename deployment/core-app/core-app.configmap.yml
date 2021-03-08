@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: core-app
+  namespace: k8s-demo
+data:
+  test.config.key1: 'value1'
