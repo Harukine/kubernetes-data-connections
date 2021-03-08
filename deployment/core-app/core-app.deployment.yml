@@ -35,7 +35,7 @@ spec:
               port: 8080
               scheme: HTTP
           ports:
-            - containerPort: 8080
+            - containerPort: 3001
               name: http
           volumeMounts:
             - name: secrets
