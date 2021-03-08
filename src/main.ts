@@ -4,15 +4,20 @@ import {MicroserviceOptions, Transport} from "@nestjs/microservices";
 
 async function bootstrap() {
 
-    const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-        AppModule,
+    // web app
+    const app = await NestFactory.create(AppModule);
+
+    app.connectMicroservice<MicroserviceOptions>(
         {
             transport: Transport.REDIS,
             options: {
                 url: 'redis://localhost:6379',
             },
         });
-    app.listen(() => console.log('Microservice is listening'));
+
+    await app.startAllMicroservicesAsync();
+    await app.listen(3001);
+    console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 bootstrap();
