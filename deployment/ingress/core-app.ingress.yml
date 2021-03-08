@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: core-app
+  namespace: k8s-demo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: test.domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: core-app
+                port:
+                  number: 80
