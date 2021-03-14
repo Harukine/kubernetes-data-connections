@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { PostgresController } from './postgres.controller';
 
-@Module({})
+@Module({
+  controllers: [PostgresController]
+})
 export class PostgresModule {}
