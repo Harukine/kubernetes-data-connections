@@ -8,12 +8,12 @@ spec:
     matchLabels:
       app: redis
   policyTypes:
-    - Ingress
+  - Ingress
   ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: core-app
-      ports:
-        - protocol: TCP
-          port: 6379
+  - from:
+    - podSelector:
+        matchLabels:
+          app: core-app
+    ports:
+    - protocol: TCP
+      port: 6379
