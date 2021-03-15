@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-primary
+  namespace: k8s-demo
+  labels:
+    app: postgres
+    role: primary
+    tier: backend
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+    role: primary
+    tier: backend
