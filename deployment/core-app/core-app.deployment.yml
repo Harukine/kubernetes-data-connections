@@ -18,22 +18,6 @@ spec:
         - name: core-app
           image: core-app:demo
           imagePullPolicy: IfNotPresent
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /
-              port: 8080
-              scheme: HTTP
-            initialDelaySeconds: 3
-            periodSeconds: 3
-            successThreshold: 1
-            timeoutSeconds: 1
-          readinessProbe:
-            failureThreshold: 1
-            httpGet:
-              path: /
-              port: 8080
-              scheme: HTTP
           ports:
             - containerPort: 3001
               name: http
@@ -42,11 +26,13 @@ spec:
               mountPath: "/etc/secrets"
           env:
             - name: REDIS_HOST
-              value: 'redis-primary'
+              value: "redis-primary"
             - name: REDIS_PORT
-              value: '6379'
-            # - name: CHAOS
-            #   value: true
+              value: "6379"
+            - name: POSTGRES_HOST
+              value: "postgres-primary"
+            - name: POSTGRES_PORT
+              value: "5432"
             - name: SECRET1_TEST
               valueFrom:
                 secretKeyRef:
