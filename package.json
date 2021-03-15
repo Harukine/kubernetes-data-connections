@@ -28,6 +28,7 @@
     "@nestjs/typeorm": "^7.1.5",
     "cache-manager": "^3.4.1",
     "cache-manager-redis-store": "^2.0.0",
+    "pg": "^8.5.1",
     "postgres": "^1.0.2",
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
